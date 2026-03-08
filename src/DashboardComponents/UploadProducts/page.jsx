@@ -1,0 +1,307 @@
+import React, { useState } from "react";
+import { Upload, CheckCircle } from "lucide-react";
+import { itemFields } from "../../data/itemFields";
+import { createProduct } from "../../Api/ProductApi"; // ✅ centralized API
+
+const UploadProduct = () => {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    category: "",
+    totalPrice: "",
+    discountPrice: "",
+    images: [],
+    featured: false,
+    deliveryAvailable: false,
+  });
+
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const selectedCategory = itemFields[formData.category];
+  const dynamicFields = selectedCategory?.fields || [];
+
+  const discountPercent =
+    formData.totalPrice && formData.discountPrice
+      ? Math.round(
+          ((formData.totalPrice - formData.discountPrice) / formData.totalPrice) * 100
+        )
+      : 0;
+
+  const handleChange = (e) => {
+    const { name, value, files, type, checked } = e.target;
+
+    if (name === "images" && files) {
+      const selectedFiles = Array.from(files).slice(0, 4); // limit 4 images
+      setFormData((prev) => ({ ...prev, images: selectedFiles }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: type === "checkbox" ? checked : value,
+        ...(name === "brand" && { model: "" }),
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const data = new FormData();
+      data.append("name", formData.title);
+      data.append("desc", formData.description);
+      data.append("category", formData.category);
+      data.append("totalPrice", formData.totalPrice);
+      data.append("discountPrice", formData.discountPrice);
+      data.append("featured", formData.featured);
+      data.append("deliveryAvailable", formData.deliveryAvailable);
+
+      formData.images.forEach((img) => data.append("images", img));
+
+      dynamicFields.forEach((field) => {
+        if (formData[field.name]) {
+          data.append(field.name, formData[field.name]);
+        }
+      });
+
+      const response = await createProduct(data); // ✅ API file
+
+      if (response.status === 201 || response.status === 200) {
+        setSubmitted(true);
+        setFormData({
+          title: "",
+          description: "",
+          category: "",
+          totalPrice: "",
+          discountPrice: "",
+          images: [],
+          featured: false,
+          deliveryAvailable: false,
+        });
+        setTimeout(() => setSubmitted(false), 3000);
+      } else {
+        alert(response.data.message || "Upload failed");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const renderField = (field) => {
+    const dependentValue = formData[field.dependsOn] || "";
+    const options = field.dependsOn ? field.options[dependentValue] || [] : field.options;
+
+    if (field.type === "select") {
+      const dataListId = `${field.name}-options`;
+      return (
+        <>
+          <input
+            list={dataListId}
+            name={field.name}
+            value={formData[field.name] || ""}
+            onChange={handleChange}
+            placeholder={`Enter ${field.label} or select from list`}
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+          />
+          <datalist id={dataListId}>
+            {options.map((option, index) => (
+              <option key={index} value={option} />
+            ))}
+          </datalist>
+        </>
+      );
+    }
+
+    return (
+      <input
+        type={field.type}
+        name={field.name}
+        value={formData[field.name] || ""}
+        onChange={handleChange}
+        placeholder={`Enter ${field.label}`}
+        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+      />
+    );
+  };
+
+  return (
+    <div className="mx-auto bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+        Upload Used Product
+      </h2>
+
+      {submitted && (
+        <div className="flex items-center justify-center bg-green-50 text-green-700 py-2 rounded-md mb-4">
+          <CheckCircle className="w-5 h-5 mr-2" />
+          Product uploaded successfully!
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Title */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-2">Product Title</label>
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Enter product title"
+            required
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+          />
+        </div>
+
+        {/* Description */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-2">Description</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Describe your product..."
+            rows={4}
+            required
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none resize-none"
+          />
+        </div>
+
+        {/* Category */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-2">Category</label>
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+          >
+            <option value="">Select Category</option>
+            {Object.keys(itemFields).map((key) => (
+              <option key={key} value={key}>
+                {itemFields[key].label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Dynamic Fields */}
+        {dynamicFields.map((field, index) => (
+          <div key={index}>
+            <label className="block text-gray-700 font-medium mb-2">{field.label}</label>
+            {renderField(field)}
+          </div>
+        ))}
+
+        {/* Price */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Total Price</label>
+            <input
+              type="number"
+              name="totalPrice"
+              value={formData.totalPrice}
+              onChange={handleChange}
+              placeholder="Enter total price"
+              required
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Discounted Price</label>
+            <input
+              type="number"
+              name="discountPrice"
+              value={formData.discountPrice}
+              onChange={handleChange}
+              placeholder="Enter discounted price"
+              required
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+            />
+          </div>
+        </div>
+
+        {/* Discount Display */}
+        {discountPercent > 0 && (
+          <div className="text-green-600 font-semibold">
+            Discount: {discountPercent}% OFF
+          </div>
+        )}
+
+        {/* Checkboxes */}
+        <div className="flex gap-6 items-center mb-4">
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              name="featured"
+              checked={formData.featured}
+              onChange={handleChange}
+              className="w-4 h-4 text-green-600"
+            />
+            <span className="text-gray-700">Featured Product</span>
+          </label>
+
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              name="deliveryAvailable"
+              checked={formData.deliveryAvailable}
+              onChange={handleChange}
+              className="w-4 h-4 text-green-600"
+            />
+            <span className="text-gray-700">Delivery Available</span>
+          </label>
+        </div>
+
+        {/* Image Upload */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-2">Upload Images (Max 4)</label>
+          <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+            {formData.images.length > 0 ? (
+              <div className="flex gap-2 overflow-x-auto w-full h-full p-1">
+                {formData.images.map((img, index) => (
+                  <img
+                    key={index}
+                    src={URL.createObjectURL(img)}
+                    alt={`Preview ${index + 1}`}
+                    className="h-full object-cover rounded-lg"
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center">
+                <Upload className="w-8 h-8 text-gray-400" />
+                <p className="text-gray-500 mt-2">Click to upload images</p>
+              </div>
+            )}
+            <input
+              type="file"
+              name="images"
+              accept="image/*"
+              className="hidden"
+              onChange={handleChange}
+              multiple
+            />
+          </label>
+        </div>
+
+        {/* Submit */}
+        <button
+          type="submit"
+          disabled={loading}
+          className={`w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all shadow-md ${
+            loading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          {loading ? "Uploading..." : "Upload Product"}
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default UploadProduct;
