@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import axios from "axios";
+import httpClient from "../utils/HttpClient";
 
 const SellerProtectedRoute = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/auth/sellers/verify", {
-        withCredentials: true,
-      })
+    httpClient
+      .get("/auth/sellers/verify")
       .then(() => setAuthenticated(true))
       .catch(() => setAuthenticated(false));
   }, []);
