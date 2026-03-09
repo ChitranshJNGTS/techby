@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import httpClient from "../utils/HttpClient";
+import { verifySeller } from "../Api/authApi";
 
 const SellerProtectedRoute = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(null);
 
   useEffect(() => {
-    httpClient
-      .get("/auth/sellers/verify")
+    verifySeller()
       .then(() => setAuthenticated(true))
       .catch(() => setAuthenticated(false));
   }, []);
