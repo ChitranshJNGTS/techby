@@ -20,7 +20,7 @@ export const getSellerProfile = () => {
 };
 
 export const verifySeller = () => {
-  return httpClient.get(ENDPOINTS.AUTH.VERIFY);
+  return httpClient.get(ENDPOINTS.AUTH.VERIFY ,{ withCredentials: true });
 };
 
 export const getDashboard = () => {
