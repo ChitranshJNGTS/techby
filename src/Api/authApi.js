@@ -1,6 +1,6 @@
 // src/api/authApi.js
 
-import httpClient from "../utils/httpClient";
+import httpClient from "../utils/HttpClient";
 import { ENDPOINTS } from "../utils/endpoints";
 
 export const registerSeller = (data) => {
