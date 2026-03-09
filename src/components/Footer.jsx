@@ -153,10 +153,10 @@ const Footer = () => {
             Call center open weekdays 9:00-20:00, weekends 9:00-18:00
           </p> */}
           <p className="flex items-center gap-2 mt-3">
-            <FaPhoneAlt className="text-[#36b37e]" /> +1-716-514-5309
+            <FaPhoneAlt className="text-[#36b37e]" /> 
           </p>
           <p className="flex items-center gap-2 mt-2">
-            <MdEmail className="text-[#36b37e]" /> TechBy.sales@mail.com
+            <MdEmail className="text-[#36b37e]" /> techbysupport@gmail.com
           </p>
           <p className="flex items-center gap-2 mt-2 text-green-400 font-semibold">
             <MdLocationOn /> Available only in Indore
