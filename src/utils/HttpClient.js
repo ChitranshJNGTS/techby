@@ -33,8 +33,8 @@ httpClient.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       console.log("Unauthorized - Logging out");
-      localStorage.removeItem("token");
-      window.location.href = "/login";
+      // localStorage.removeItem("token");
+      // window.location.href = "/login";
     }
 
     return Promise.reject(error);
