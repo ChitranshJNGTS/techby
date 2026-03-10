@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import MobileBottomNavbar from "./MobileBottomNavbar";
 
 const WinnerCheckPage = () => {
   const [code, setCode] = useState("");
@@ -137,7 +138,7 @@ const WinnerCheckPage = () => {
         </div>
 
       </div>
-
+        <MobileBottomNavbar/>
       <Footer />
     </>
   );
