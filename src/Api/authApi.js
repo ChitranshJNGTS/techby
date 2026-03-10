@@ -12,9 +12,9 @@ export const loginSeller = (data) => {
 };
 
 export const logoutSeller = () => {
-  return httpClient.post(ENDPOINTS.AUTH.LOGOUT);
+  localStorage.removeItem("sellerToken");
+  // reset auth state in Redux
 };
-
 export const getSellerProfile = () => {
   return httpClient.get(ENDPOINTS.AUTH.PROFILE);
 };

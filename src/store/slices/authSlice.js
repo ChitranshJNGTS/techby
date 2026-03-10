@@ -82,11 +82,20 @@ const authSlice = createSlice({
       .addCase(login.pending, (state) => {
         state.loading = true;
       })
-      .addCase(login.fulfilled, (state, action) => {
-        state.loading = false;
-        state.seller = action.payload;
-        state.isAuthenticated = true;
-      })
+    .addCase(login.fulfilled, (state, action) => {
+  state.loading = false;
+  state.seller = action.payload.seller; // seller data
+  state.isAuthenticated = true;
+
+  // store token in localStorage
+  if (action.payload.token) {
+    const expiryTime = Date.now() + 5 * 60 * 60 * 1000; // 5 hours
+    localStorage.setItem(
+      "sellerToken",
+      JSON.stringify({ token: action.payload.token, expiry: expiryTime })
+    );
+  }
+})
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
