@@ -8,37 +8,37 @@ const httpClient = axios.create({
   },
 });
 
-// ✅ Request Interceptor
-httpClient.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
-    const storeToken = localStorage.getItem("storeToken");
+// // ✅ Request Interceptor
+// httpClient.interceptors.request.use(
+//   (config) => {
+//     const token = localStorage.getItem("token");
+//     const storeToken = localStorage.getItem("storeToken");
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+//     if (token) {
+//       config.headers.Authorization = `Bearer ${token}`;
+//     }
 
-    if (storeToken) {
-      config.headers["x-store-token"] = storeToken;
-    }
+//     if (storeToken) {
+//       config.headers["x-store-token"] = storeToken;
+//     }
 
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+//     return config;
+//   },
+//   (error) => Promise.reject(error)
+// );
 
-// ✅ Response Interceptor
-httpClient.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      console.log("Unauthorized - Logging out");
-      localStorage.removeItem("token");
-      window.location.href = "/seller-login";
-    }
+// // ✅ Response Interceptor
+// httpClient.interceptors.response.use(
+//   (response) => response,
+//   (error) => {
+//     if (error.response?.status === 401) {
+//       console.log("Unauthorized - Logging out");
+//       localStorage.removeItem("token");
+//       window.location.href = "/seller-login";
+//     }
 
-    return Promise.reject(error);
-  }
-);
+//     return Promise.reject(error);
+//   }
+// );
 
 export default httpClient;
