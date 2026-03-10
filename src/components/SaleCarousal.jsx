@@ -2,18 +2,26 @@ import React, { useState, useEffect, useRef } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
+// ✅ Import images directly
+import mobileSale from "../assets/add banners/mobile sale.png";
+import buyMore from "../assets/add banners/buymore.png";
+import gamingConsoles from "../assets/add banners/gaming consoles.png";
+
 const saleBanners = [
   {
     id: 1,
-    image: "src/assets/add banners/mobile sale.png",
+    image: mobileSale,
+    title: "Mobile Sale",
   },
   {
     id: 2,
-    image: "src/assets/add banners/buymore.png",
+    image: buyMore,
+    title: "Buy More Offer",
   },
   {
     id: 3,
-    image: "src/assets/add banners/gaming consoles.png",
+    image: gamingConsoles,
+    title: "Gaming Consoles",
   },
 ];
 
@@ -47,12 +55,8 @@ const SaleBannerCarousel = () => {
   };
 
   return (
-    <section
-      className="relative max-w-7xl mx-auto px-4 py-8"
-
-    >
+    <section className="relative max-w-7xl mx-auto px-4 py-8">
       <div className="overflow-hidden rounded-2xl shadow-xl">
-
         {/* Slides */}
         <div
           className="flex transition-transform duration-700 ease-in-out"
@@ -60,33 +64,11 @@ const SaleBannerCarousel = () => {
         >
           {saleBanners.map((banner) => (
             <div key={banner.id} className="min-w-full relative">
-
               <img
                 src={banner.image}
                 alt={banner.title}
-                className="w-full h-[220px] sm:h-[320px] md:h-[420px] object-fit"
+                className="w-full h-[220px] sm:h-[320px] md:h-[420px] object-cover"
               />
-
-              {/* Gradient overlay */}
-              {/* <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" /> */}
-
-              {/* Content */}
-              <div className="absolute inset-0 flex flex-col justify-center px-6 sm:px-12 text-white max-w-xl">
-                <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight">
-                  {banner.title}
-                </h2>
-
-                <p className="mt-2 sm:mt-4 text-sm sm:text-lg text-gray-200">
-                  {banner.subtitle}
-                </p>
-
-                {/* <button
-                  onClick={() => navigate("/search")}
-                  className="mt-4 sm:mt-6 w-fit px-6 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition"
-                >
-                  Shop Now
-                </button> */}
-              </div>
             </div>
           ))}
         </div>
@@ -114,9 +96,7 @@ const SaleBannerCarousel = () => {
             key={index}
             onClick={() => setCurrentSlide(index)}
             className={`h-2.5 rounded-full transition-all duration-300 ${
-              currentSlide === index
-                ? "bg-green-500 w-6"
-                : "bg-gray-300 w-2.5"
+              currentSlide === index ? "bg-green-500 w-6" : "bg-gray-300 w-2.5"
             }`}
           />
         ))}

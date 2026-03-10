@@ -14,7 +14,6 @@ const bannerItems = [
   "📍 Currently Available in Indore",
   "🚚 Free Delivery on Selected Products",
   "🎉 We have completed 155 orders",
-  "🎁 Complete 500 orders to get a new mobile",
   "📦 Hurry! Limited Stock Available",
 ];
 
