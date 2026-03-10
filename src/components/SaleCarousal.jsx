@@ -5,21 +5,15 @@ import { useNavigate } from "react-router-dom";
 const saleBanners = [
   {
     id: 1,
-    title: "Mega Refurbished Sale",
-    subtitle: "Up to 50% OFF on Mobiles & Laptops",
-    image: "https://picsum.photos/1200/500?random=21",
+    image: "src/assets/add banners/mobile sale.png",
   },
   {
     id: 2,
-    title: "Limited Time Deals",
-    subtitle: "Grab the best refurbished gadgets today",
-    image: "https://picsum.photos/1200/500?random=22",
+    image: "src/assets/add banners/buymore.png",
   },
   {
     id: 3,
-    title: "Buy More Save More",
-    subtitle: "Special discounts on consoles & gaming CDs",
-    image: "https://picsum.photos/1200/500?random=23",
+    image: "src/assets/add banners/gaming consoles.png",
   },
 ];
 
@@ -70,11 +64,11 @@ const SaleBannerCarousel = () => {
               <img
                 src={banner.image}
                 alt={banner.title}
-                className="w-full h-[220px] sm:h-[320px] md:h-[420px] object-cover"
+                className="w-full h-[220px] sm:h-[320px] md:h-[420px] object-fit"
               />
 
               {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+              {/* <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" /> */}
 
               {/* Content */}
               <div className="absolute inset-0 flex flex-col justify-center px-6 sm:px-12 text-white max-w-xl">
@@ -86,12 +80,12 @@ const SaleBannerCarousel = () => {
                   {banner.subtitle}
                 </p>
 
-                <button
+                {/* <button
                   onClick={() => navigate("/search")}
                   className="mt-4 sm:mt-6 w-fit px-6 py-2 bg-green-500 rounded-lg font-semibold hover:bg-green-600 transition"
                 >
                   Shop Now
-                </button>
+                </button> */}
               </div>
             </div>
           ))}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaCheck, FaTruck, FaWhatsapp, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
+import { FaCheck, FaTruck, FaWhatsapp, FaPhoneAlt, FaEnvelope, FaClock, FaMoneyBillWave, FaMobileAlt, FaUndo } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { getProductById } from "../Api/ProductApi"; // ✅ centralized API
 import Navbar from "./Navbar";
@@ -63,16 +63,50 @@ You can view it here: ${productUrl}
   // Encode message for WhatsApp URL
   const url = `https://wa.me/${sellerPhone}?text=${encodeURIComponent(message)}`;
 
+ 
+
   // Open WhatsApp chat
   window.open(url, "_blank");
 };
 
+   const services = [
+    {
+      icon: <FaTruck className="text-green-600 text-2xl" />,
+      title: "Free Delivery in Indore",
+      desc: "Enjoy free delivery on all orders within Indore city.",
+    },
+    {
+      icon: <FaClock className="text-green-600 text-2xl" />,
+      title: "Same Day / Next Day Delivery",
+      desc: "Get your product delivered the same day or the next day.",
+    },
+    {
+      icon: <FaUndo className="text-green-600 text-2xl" />,
+      title: "No Return Policy",
+      desc: "Please check product carefully before purchase.",
+    },
+    {
+      icon: <FaMoneyBillWave className="text-green-600 text-2xl" />,
+      title: "COD Available",
+      desc: "Order tension free with Cash On Delivery option.",
+    },
+    {
+      icon: <FaTruck className="text-green-600 text-2xl" />,
+      title: "Cancel at Doorstep",
+      desc: "You can cancel your order at the time of delivery.",
+    },
+    {
+      icon: <FaMobileAlt className="text-green-600 text-2xl" />,
+      title: "Exchange Old Mobile",
+      desc: "Exchange available depending on shop owner's policy.",
+    },
+  ];
   return (
     <>
       <Navbar />
-      <CategoryMenu />
+      {/* <CategoryMenu /> */}
 
-      <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-10">
+      <div className="max-w-7xl mx-auto px-6 py-2 flex flex-col md:flex-row gap-10">
 
         {/* LEFT: Sticky Images */}
         <div className="w-full md:w-1/2">
@@ -131,19 +165,32 @@ You can view it here: ${productUrl}
             <p className="text-gray-700 mt-3">{product.desc}</p>
           </div>
 
-          {/* WhatsApp Button */}
-          <button
-            onClick={handleWhatsAppChat}
-            className="w-full md:w-3/5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 rounded-full flex items-center justify-center gap-3 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95"
-          >
-            <FaWhatsapp className="text-white text-lg md:text-xl animate-bounce-slow" /> 
-            Chat on WhatsApp
-          </button>
+         {/* WhatsApp Button for Desktop */}
+<div className="hidden md:block">
+  <button
+    onClick={handleWhatsAppChat}
+    className="w-full md:w-3/5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 rounded-full flex items-center justify-center gap-3 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95"
+  >
+    <FaWhatsapp className="text-white text-lg md:text-xl animate-bounce-slow" /> 
+    Chat on WhatsApp
+  </button>
+</div>
+
+{/* Floating WhatsApp Button for Mobile */}
+<div className="md:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 w-11/12">
+  <button
+    onClick={handleWhatsAppChat}
+    className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 rounded-full flex items-center justify-center gap-3 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95"
+  >
+    <FaWhatsapp className="text-white text-lg animate-bounce-slow" /> 
+    Chat on WhatsApp
+  </button>
+</div>
 
           {/* Product Attributes & Seller */}
           <div className="flex flex-col gap-6 mt-6">
             <div className="flex-1 p-6 bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <h2 className="font-bold text-xl mb-4 text-gray-800 border-b pb-2">Product Details</h2>
+              <h2 className="font-bold text-xl mb-4 text-green-800 border-b pb-2">Product Details</h2>
               <div className="grid grid-cols-2 gap-y-3 text-sm md:text-base">
                 {product.attributes &&
                   Object.entries(product.attributes).map(([key, value]) => (
@@ -159,7 +206,7 @@ You can view it here: ${productUrl}
 
             {product.sellerId && (
               <div className="flex-1 p-6 bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <h2 className="font-bold text-xl mb-4 text-gray-800 border-b pb-2">Seller Details</h2>
+                <h2 className="font-bold text-xl mb-4 text-green-800 border-b pb-2">Seller Details</h2>
                 <div className="flex items-center gap-5">
                   <img
                     src={product.sellerId.logo || "/default-shop-logo.png"}
@@ -178,10 +225,35 @@ You can view it here: ${productUrl}
                         <FaEnvelope className="text-gray-500" /> {product.sellerEmail}
                       </span>
                     )}
+                    
                   </div>
                 </div>
               </div>
             )}
+
+
+<div className="max-w-6xl border border-gray-200 py-3 mx-auto px-3">
+  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+    {services.map((service, index) => (
+      <div
+        key={index}
+        className="bg-white border rounded-md p-3 text-center hover:shadow-sm transition"
+      >
+        <div className="flex justify-center mb-1 text-green-600 text-lg">
+          {service.icon}
+        </div>
+
+        <h3 className="text-sm font-semibold text-gray-800">
+          {service.title}
+        </h3>
+
+        <p className="text-xs text-gray-500 mt-1">
+          {service.desc}
+        </p>
+      </div>
+    ))}
+  </div>
+</div>
           </div>
         </div>
       </div>

@@ -96,6 +96,7 @@ import GenerateCodePage from "../components/GenrateCodePage";
 import SellerRegisterPage from "../pages/SellerRegister/page";
 
 import SellerProtectedRoute from "./StoreRoutes";
+import WinnerCheckPage from "../components/WinnerCheckPage";
 
 const Routing = () => {
   return (
@@ -107,6 +108,7 @@ const Routing = () => {
       {/* Products */}
       <Route path="/product/:id" element={<ProductDetails />} />
       <Route path="/all-products" element={<AllProductsPage />} />
+      <Route path="/winner-check" element={<WinnerCheckPage />} />
 
       {/* Seller Auth */}
       <Route path="/seller-login" element={<SellerLogin />} />

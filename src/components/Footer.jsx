@@ -133,6 +133,18 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 import React from "react";
 import { FaInstagram, FaFacebookF, FaTwitter, FaYoutube, FaPhoneAlt } from "react-icons/fa";
 import { MdEmail, MdLocationOn } from "react-icons/md";
@@ -152,9 +164,9 @@ const Footer = () => {
           {/* <p className="text-sm text-gray-400 mb-2">
             Call center open weekdays 9:00-20:00, weekends 9:00-18:00
           </p> */}
-          <p className="flex items-center gap-2 mt-3">
+          {/* <p className="flex items-center gap-2 mt-3">
             <FaPhoneAlt className="text-[#36b37e]" /> 
-          </p>
+          </p> */}
           <p className="flex items-center gap-2 mt-2">
             <MdEmail className="text-[#36b37e]" /> techbysupport@gmail.com
           </p>
@@ -163,16 +175,36 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Quick Links */}
-        <div>
-          <h4 className="text-white font-semibold mb-4">QUICK LINKS</h4>
-          <ul className="space-y-2 text-gray-400">
-            <li>About Us</li>
-            <li>Privacy & Policy</li>
-            <li>Terms & Conditions</li>
-            {/* <li>Newsletter</li> */}
-          </ul>
-        </div>
+       {/* Quick Links */}
+<div>
+
+  <h4 className="text-white font-semibold mb-4">QUICK LINKS</h4>
+  <ul className="space-y-2 text-gray-400">
+    <li>
+      <Link to="/about" className="hover:text-white transition">
+        About Us
+      </Link>
+    </li>
+
+    <li>
+      <Link to="/about" className="hover:text-white transition">
+        Privacy & Policy
+      </Link>
+    </li>
+
+    <li>
+      <Link to="/about" className="hover:text-white transition">
+        Terms & Conditions
+      </Link>
+    </li>
+
+    <li>
+      <Link to="/seller-login" className="hover:text-white transition">
+        Seller Login
+      </Link>
+    </li>
+  </ul>
+</div>
 
        {/* Social Media */}
 <div>

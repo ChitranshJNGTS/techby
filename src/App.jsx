@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
 import AppRoutes from "./routes/Routing";
 import { useAutoLogout } from "../hooks/TokenExpire";
+import ScrollToTop from "./components/ScrollToTop";
 
 
 
@@ -11,6 +12,7 @@ function App() {
     <Router>
       {/* hook must run inside Router context */}
       <AutoLogout />
+      <ScrollToTop />
       <div className="min-h-screen flex flex-col ">
         <main className="flex-1 ">
           <AppRoutes />

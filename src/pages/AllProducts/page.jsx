@@ -42,6 +42,29 @@ const ProductsPage = () => {
     if (page > 0 && page <= totalPages) setCurrentPage(page);
   };
 
+  const ProductSkeleton = () => {
+  return (
+    <div className="bg-white border border-gray-200 overflow-hidden shadow animate-pulse flex flex-col">
+      <div className="w-full h-48 bg-gray-300"></div>
+
+      <div className="p-4 flex flex-col flex-grow space-y-3">
+        <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+        <div className="h-3 bg-gray-200 rounded w-full"></div>
+        <div className="h-3 bg-gray-200 rounded w-2/3"></div>
+
+        <div className="flex items-center gap-2 mt-2">
+          <div className="h-5 bg-gray-300 rounded w-16"></div>
+          <div className="h-4 bg-gray-200 rounded w-12"></div>
+        </div>
+
+        <div className="flex items-center gap-2 mt-4">
+          <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
+          <div className="h-4 bg-gray-200 rounded w-24"></div>
+        </div>
+      </div>
+    </div>
+  );
+};
   const getDiscountPercent = (total, discount) =>
     Math.round(((total - discount) / total) * 100);
 
@@ -54,13 +77,12 @@ const ProductsPage = () => {
         </h2>
 
         {loading && (
-          <div className="flex items-center justify-center py-6">
-            <div
-              className="animate-spin rounded-full border-4 border-gray-300 border-t-blue-600"
-              style={{ width: 40, height: 40 }}
-            ></div>
-          </div>
-        )}
+  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
+    {[...Array(8)].map((_, i) => (
+      <ProductSkeleton key={i} />
+    ))}
+  </div>
+)}
 
         {error && <div className="text-center text-red-500">{error}</div>}
 

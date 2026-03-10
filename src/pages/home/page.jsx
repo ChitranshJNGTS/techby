@@ -10,6 +10,7 @@ import SaleBannerCarousel from '../../components/SaleCarousal'
 import CategoryPage from '../../components/CategoryPage'
 import PrizeCarouselPage from '../../components/PrizeCarouselPage'
 import MobileBottomNavbar from '../../components/MobileBottomNavbar'
+import WinnerBanner from '../../components/WinnerBanner'
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
                <Navbar/>
                <CategoryMenu/>
             <HeroSection />
+            <WinnerBanner/>
             <PrizeCarouselPage/>
             <CategoryPage/>
             <FeaturedProducts /> 
