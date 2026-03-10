@@ -91,7 +91,7 @@ const ProductsPage = ({ heading = "Products Near You" }) => {
                   <img
                     src={product.imageUrls?.[0] || "/default-product-image.png"}
                     alt={product.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-fit"
                   />
 
                   {product.featured && (

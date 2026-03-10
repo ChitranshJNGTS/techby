@@ -115,7 +115,7 @@ You can view it here: ${productUrl}
               <img
                 src={selectedImage}
                 alt={product.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-fit"
               />
               {product.featured && (
                 <span className="absolute top-3 left-3 bg-yellow-400 text-black text-xs font-semibold px-3 py-1 rounded-lg shadow">
