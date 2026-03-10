@@ -34,7 +34,7 @@ httpClient.interceptors.response.use(
     if (error.response?.status === 401) {
       console.log("Unauthorized - Logging out");
       localStorage.removeItem("token");
-      window.location.href = "/login";
+      window.location.href = "/seller-login";
     }
 
     return Promise.reject(error);
