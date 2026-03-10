@@ -9,8 +9,8 @@ const assuredGifts = [
   { purchase: "Smartphone", icon: <Smartphone size={32} /> },
   { purchase: "Laptop", icon: <Speaker size={32} /> },
   { purchase: "Mobile Accessories", icon: <Gift size={32} /> },
-  { purchase: "Smartwatch", icon: <Watch size={32} /> },
-  { purchase: "Tablet", icon: <Headphones size={32} /> },
+  { purchase: "Gaming Console", icon: <Watch size={32} /> },
+  { purchase: "PS CD", icon: <Headphones size={32} /> },
 ];
 
 const ArrowLeft = ({ onClick }) => (
