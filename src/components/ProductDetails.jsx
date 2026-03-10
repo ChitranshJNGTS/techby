@@ -28,14 +28,53 @@ const ProductDetails = () => {
     fetchProduct();
   }, [id]);
 
-  if (!product) {
-    return (
-      <div className="flex justify-center py-20 text-lg font-medium">
-        Loading Product...
-      </div>
-    );
-  }
+ if (!product) {
+  return (
+    <div className="max-w-7xl mx-auto px-6 py-10 animate-pulse">
+      <div className="flex flex-col md:flex-row gap-10">
 
+        {/* LEFT: Image Skeleton */}
+        <div className="w-full md:w-1/2 flex flex-col gap-4">
+          <div className="bg-gray-300 h-96 rounded-lg"></div>
+          <div className="flex gap-2 overflow-x-auto">
+            <div className="bg-gray-300 w-20 h-20 rounded-lg"></div>
+            <div className="bg-gray-300 w-20 h-20 rounded-lg"></div>
+            <div className="bg-gray-300 w-20 h-20 rounded-lg"></div>
+          </div>
+        </div>
+
+        {/* RIGHT: Content Skeleton */}
+        <div className="w-full md:w-1/2 flex flex-col gap-4">
+          <div className="h-8 bg-gray-300 rounded w-3/4"></div> {/* Product Name */}
+          <div className="flex gap-4 items-center">
+            <div className="h-8 bg-gray-300 rounded w-24"></div> {/* Price */}
+            <div className="h-6 bg-gray-300 rounded w-12"></div> {/* Discount */}
+          </div>
+          <div className="h-20 bg-gray-300 rounded w-full"></div> {/* Description */}
+          <div className="h-12 bg-gray-300 rounded w-1/2 mt-4"></div> {/* WhatsApp Button */}
+          
+          {/* Product Details Section */}
+          <div className="mt-6 p-4 bg-gray-200 rounded-lg space-y-2">
+            <div className="h-4 bg-gray-300 rounded w-1/3"></div>
+            <div className="h-4 bg-gray-300 rounded w-2/3"></div>
+            <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+            <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* You May Also Like Skeleton */}
+      <div className="mt-10">
+        <div className="h-8 bg-gray-300 rounded w-1/4 mb-4"></div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          {Array.from({ length: 4 }).map((_, idx) => (
+            <div key={idx} className="bg-gray-300 h-60 rounded-lg animate-pulse"></div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
   const discountPercent =
     product.totalPrice && product.discountPrice
       ? Math.round(((product.totalPrice - product.discountPrice) / product.totalPrice) * 100)

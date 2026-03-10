@@ -107,7 +107,7 @@ const AboutPoliciesPage = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-5xl mx-auto text-center mb-10"
+        className="max-w-5xl mx-auto text-center mt-20 mb-10"
       >
         <h1 className="text-4xl font-bold text-green-700">
           About & Policies
